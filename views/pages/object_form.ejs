@@ -1,0 +1,60 @@
+<%- include("../_partials/head") %>
+<div class="layout-center">
+    <h1>Declare an object</h1>
+    <div class="alert alert-danger d-none" role="alert"></div>
+
+    <form id="object-form">
+
+        <div class="form-outline mb-4">
+            <input type="text" id="name" name="name" placeholder="Name" class="form-control" />
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="text" id="place" name="place" placeholder="Place" class="form-control" />
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="date" id="date" name="date" class="form-control" />
+        </div>
+
+        <div class="form-outline mb-4">
+            <textarea id="description" name="description" placeholder="Description" class="form-control" rows="5"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-3">Add my item</button>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('object-form')
+    form.addEventListener('submit', registerUser)
+
+    async function registerUser(event) {
+        event.preventDefault()
+        const name = document.getElementById('name').value
+        const place = document.getElementById('place').value
+        const date = document.getElementById('date').value
+        const description = document.getElementById('description').value
+        const username = sessionStorage.getItem("username") ? sessionStorage.getItem("username") : localStorage.getItem("username");
+
+        const result = await fetch('/api/object/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name, place, date, description, username
+            })
+        }).then((res) => res.json())
+
+        if (result.status === 'ok') {
+            location = "/object/list";
+        } else {
+            const error = document.querySelector(".alert.alert-danger");
+            document.querySelector(".layout-center").style.borderColor = "#bd2130";
+            error.classList.remove("d-none");
+            error.innerHTML = result.error;
+        }
+    }
+</script>
+<%- include("../_partials/footer") %>

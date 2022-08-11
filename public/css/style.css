@@ -1,0 +1,35 @@
+.layout-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 30%;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    padding: 70px;
+}
+
+.layout-center h1{
+    margin-bottom: 30px;
+}
+
+.layout-center input:not([type="checkbox"]), .layout-center button {
+    height: 50px;
+}
+
+.list_item {
+    margin-top: 20px;
+}
+
+.d-none {
+    display: none;
+}
+
+tbody .description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 250px;
+}
