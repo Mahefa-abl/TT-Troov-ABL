@@ -12,7 +12,7 @@ const UserSchema = Schema(
 	{ collection: 'users' }
 )
 
-const ObjectSchema = new mongoose.Schema(
+const ObjectSchema = Schema(
 	{
 		place: { type: String },
 		date: { type: Date, default: Date.now() },

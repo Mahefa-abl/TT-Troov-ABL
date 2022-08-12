@@ -39,6 +39,7 @@ app.get('/reset', (req, res) => {
 
 app.get('/object/list', (req, res) => {
 	const query = Object.find({});
+	query.populate('user');
 	query.exec(function (err, objects) {
 		if (err) {
 			return res.json({ status: 'error', error: err })
@@ -83,8 +84,7 @@ app.post('/api/change-password', async (req, res) => {
 		)
 		res.json({ status: 'ok' })
 	} catch (error) {
-		console.log(error)
-		res.json({ status: 'error', error: ';))' })
+		res.json({ status: 'error', error: error })
 	}
 })
 

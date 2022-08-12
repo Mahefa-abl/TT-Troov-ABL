@@ -10,6 +10,7 @@
 						<th scope="col">Name</th>
 						<th scope="col">Place</th>
 						<th scope="col">Date</th>
+						<th scope="col">Author</th>
 						<th scope="col">Description</th>
 					</tr>
 				</thead>
@@ -19,6 +20,7 @@
 							<th><%= object.name %></th>
 							<td><%= object.place %></td>
 							<td><%= moment(object.date).format('L') %></td>
+							<td class="description"><%= object.user.username %></td>
 							<td class="description"><%= object.description %></td>
 						</tr>
 					<% }) %>
