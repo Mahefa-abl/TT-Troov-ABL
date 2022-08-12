@@ -1,6 +1,14 @@
 <%- include("../_partials/head") %>
 <div class="container">
-	<h1>List of lost items</h1>
+	<div class="row justify-content-between">
+		<div class="col-4">
+			<h1>List of lost items</h1>
+		</div>
+		<div class="col-4 mt-3">
+			<button class="btn btn-primary logout">Logout</button>
+		</div>
+	</div>
+
 	<a href="/object/new" class="btn btn-primary">Add item</a>
 	<div class="list_item">
 		<% if(typeof objects == 'object' && objects.length > 0){ %>
@@ -33,6 +41,13 @@
 </div>
 
 <script>
-
+	const logout = document.querySelector(".logout");
+	logout.addEventListener('click', function () {
+		sessionStorage.removeItem("username");
+		sessionStorage.removeItem("token");
+		localStorage.removeItem("username");
+		localStorage.removeItem("token");
+		location = "/";
+	})
 </script>
 <%- include("../_partials/footer") %>

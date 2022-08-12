@@ -13,6 +13,7 @@
     "mongoose": "^5.10.10"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "start": "node server.js"
   }
 }
