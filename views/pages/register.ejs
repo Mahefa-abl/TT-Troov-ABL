@@ -1,0 +1,65 @@
+<%- include("../_partials/head") %>
+<div class="layout-center">
+	<h1 class="text-center">Registration</h1>
+	<div class="alert alert-danger d-none" role="alert"></div>
+
+	<form id="reg-form">
+
+		<!-- Name input -->
+		<div class="form-outline mb-4">
+			<input type="text" id="name" placeholder="Name" class="form-control" />
+		</div>
+
+		<!-- Username input -->
+		<div class="form-outline mb-4">
+			<input type="text" id="username" placeholder="Username" class="form-control" />
+		</div>
+
+		<!-- Password input -->
+		<div class="form-outline mb-4">
+			<input type="password" id="password" placeholder="Password" class="form-control" />
+		</div>
+
+		<!-- Repeat Password input -->
+		<div class="form-outline mb-4">
+			<input type="password" id="repeatPassword" placeholder="Repeat password" class="form-control" />
+		</div>
+
+		<!-- Submit button -->
+		<button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
+	</form>
+</div>
+
+
+<script>
+	const form = document.getElementById('reg-form')
+	form.addEventListener('submit', registerUser)
+
+	async function registerUser(event) {
+		event.preventDefault()
+		const username = document.getElementById('username').value
+		const password = document.getElementById('password').value
+		const confirmPassword = document.getElementById('repeatPassword').value
+		const name = document.getElementById('name').value
+
+		const result = await fetch('/api/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username, password, name, confirmPassword
+			})
+		}).then((res) => res.json())
+
+		if (result.status === 'ok') {
+			location = '/';
+		} else {
+			const error = document.querySelector(".alert.alert-danger");
+			document.querySelector(".layout-center").style.borderColor = "#bd2130";
+			error.classList.remove("d-none");
+			error.innerHTML = result.error;
+		}
+	}
+</script>
+<%- include("../_partials/footer") %>

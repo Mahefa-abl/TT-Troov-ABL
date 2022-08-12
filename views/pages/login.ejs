@@ -1,0 +1,76 @@
+<%- include('../_partials/head') %>
+<div class="layout-center">
+	<h1 class="text-center">Login</h1>
+	<div class="alert alert-danger d-none" role="alert"></div>
+	<form id="login">
+		<!-- Username input -->
+		<div class="form-outline mb-4">
+			<input type="text" autocomplete="off" id="username" placeholder="Username" class="form-control" />
+		</div>
+
+		<!-- Password input -->
+		<div class="form-outline mb-4">
+			<input type="password" autocomplete="off" id="password" placeholder="Password" class="form-control" />
+		</div>
+
+		<!-- 2 column grid layout for inline styling -->
+<!--		<div class="row mb-4">-->
+<!--			<div class="col d-flex justify-content-center">-->
+<!--				&lt;!&ndash; Checkbox &ndash;&gt;-->
+<!--				<div class="form-check">-->
+<!--					<input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />-->
+<!--					<label class="form-check-label" for="form2Example31"> Remember me </label>-->
+<!--				</div>-->
+<!--			</div>-->
+
+<!--			<div class="col">-->
+<!--				&lt;!&ndash; Simple link &ndash;&gt;-->
+<!--				<a href="#!">Forgot password?</a>-->
+<!--			</div>-->
+<!--		</div>-->
+
+		<!-- Submit button -->
+		<button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+
+		<!-- Register buttons -->
+		<div class="text-center">
+			<p>Not a member? <a href="/register">Register</a></p>
+		</div>
+	</form>
+</div>
+
+<script>
+		const form = document.getElementById('login')
+		form.addEventListener('submit', login)
+
+		async function login(event) {
+			event.preventDefault()
+			const username = document.getElementById('username').value
+			const password = document.getElementById('password').value
+
+			const result = await fetch('/api/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username,
+					password
+				})
+			}).then((res) => res.json())
+
+			if (result.status === 'ok') {
+				localStorage.setItem('token', result.data)
+				localStorage.setItem('username', username)
+				sessionStorage.setItem('token', result.data)
+				sessionStorage.setItem('username', username)
+				location = '/object/list';
+			} else {
+				const error = document.querySelector(".alert.alert-danger");
+				document.querySelector(".layout-center").style.borderColor = "#bd2130";
+				error.classList.remove("d-none");
+				error.innerHTML = result.error;
+			}
+		}
+	</script>
+<%- include('../_partials/head') %>
